@@ -4,6 +4,8 @@ import './App.css';
 import Board from './components/Board';
 import data from './sampleData';
 import Home from './components/pages/Home';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import PageNotFound from './components/pages/PageNotFound';
 
 class App extends React.Component {
 
@@ -22,11 +24,24 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Home
-          boards={this.state.boards}
-          createNewBoard={this.createNewBoard}
-        />
-        <Board />
+        <BrowserRouter>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => (
+                <Home
+                  boards={this.state.boards}
+                  createNewBoard={this.createNewBoard}
+                />
+              )}
+            />
+            <Route path='/board' component={Board} />
+            <Route component={PageNotFound} />
+          </Switch>
+        </BrowserRouter>
+        {/* 
+        <Board /> */}
       </div>
     );
   }

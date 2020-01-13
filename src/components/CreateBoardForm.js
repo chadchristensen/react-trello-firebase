@@ -54,7 +54,7 @@ class CreateBoardForm extends React.Component {
 }
 
 CreateBoardForm.propTypes = {
-
+    createNewBoard: PropTypes.func.isRequired
 }
 
 export default CreateBoardForm;
