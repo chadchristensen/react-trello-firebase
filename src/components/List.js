@@ -4,10 +4,11 @@ import Card from './Card';
 class List extends React.Component {
     render() {
         return (
-            <>
-                <p>list component</p>
-                <Card />
-            </>
+            <div className="list">
+                <div className="list-header">
+                    <p>{this.props.list.title}</p>
+                </div>
+            </div>
         )
     }
 }
