@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from './Card';
 import PropTypes from 'prop-types';
+import { cardsRef } from '../firebase';
 
 class List extends React.Component {
     state = {
@@ -8,22 +9,29 @@ class List extends React.Component {
     }
 
     nameInput = React.createRef();
-    createNewCard = (e) => {
-        e.preventDefault();
 
-        const card = {
-            text: this.nameInput.current.value,
-            listId: 'abc123',
-            labels: [],
-            createdAt: new Date()
+    createNewCard = async (e) => {
+
+        try {
+            e.preventDefault();
+    
+            const card = {
+                text: this.nameInput.current.value,
+                listId: this.props.list.id,
+                labels: [],
+                createdAt: new Date()
+            }
+    
+            if(card.text && card.listId) {
+                await cardsRef.add({ card })
+            }
+    
+            this.nameInput.current.value = '';
+            console.log(`new card added: ${card.text}`);
+
+        } catch (err) {
+            console.error('Error creating new card: ', err)
         }
-
-        if(card.text) {
-            this.setState({ currentCards: [...this.state.currentCards, card] })
-        }
-
-        this.nameInput.current.value = '';
-        console.log(`new card added: ${card.text}`);
         
     }
     render() {
